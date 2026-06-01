@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Manage Students</title>
+        <link rel="stylesheet" href="manage.css">
+    </head>
+    <body>
+        <h1>Student Management</h1>
+        <div class="form-container">
+            <input type="text" id="name" placeholder="Enter Name">
+            <input type="number" id="age" placeholder="Enter Age">
+            <input type="number" id="classstd" placeholder="Enter class">
+            <input type="text" id="section" placeholder="Enter section">
+            <input type="number" id="mark" placeholder="Enter Final Mark">
+            <button onclick="addStudent()">Add Student</button>
+            <button onclick="window.location.href='../report.html'">View Report</button>
+        </div>
+        <table id="studentTable">
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Class</th>
+                <th>Section</th>
+                <th>Mark</th>
+                <th>Action</th>
+            </tr>
+        </table>
+        <script src="manage.js"></script>
+    </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Report</title>
+<link rel="stylesheet" href="report.css" />
+</head>
+<body>
+    <h1>Student Report</h1>
+    <div class="report-box">
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-label">Total Students</div>
+                <div class="metric-value" id="total"></div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">Average Mark</div>
+                <div class="metric-value" id="average"></div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">Highest Mark</div>
+                <div class="metric-value" id="highest"></div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">Lowest Mark</div>
+                <div class="metric-value" id="lowest"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Class + Section Wise Report</h2>
+            <div id="groupReport" class="group-report"></div>
+        </div>
+    </div>
+    <button class="backBtn" onclick="window.location.href='manage/manage.html'"> Back </button>
+    <script src="report.js"></script>
+</body>
+</html>

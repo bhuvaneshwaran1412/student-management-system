@@ -1,0 +1,125 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f0f2f5;
+    min-height: 100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding: 24px;
+    text-align:center;
+}
+
+h1{
+    margin-bottom: 18px;
+    color: #222;
+}
+
+.report-box{
+    width: 100%;
+    max-width: 900px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.12);
+    padding: 22px;
+}
+
+.metrics{
+    display:grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 10px;
+}
+
+.metric{
+    background: #f7f9ff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.metric-label{
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.metric-value{
+    font-size: 20px;
+    font-weight: 700;
+    color: #111;
+}
+
+.backBtn{
+    margin-top: 18px;
+    padding: 10px 20px;
+    border:none;
+    background-color: blue;
+    color: white;
+    border-radius: 8px;
+    cursor:pointer;
+    font-size: 16px;
+}
+
+.backBtn:hover{
+    background-color: darkblue;
+}
+
+@media (max-width: 600px){
+    .metrics{
+        grid-template-columns: 1fr;
+    }
+}
+
+.section{
+    margin-top: 22px;
+    text-align: left;
+}
+
+.section-title{
+    margin-bottom: 12px;
+    color: #222;
+    font-size: 18px;
+}
+
+.group-report{
+    width: 100%;
+    overflow-x: auto;
+}
+
+.group-table{
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.group-table th,
+.group-table td{
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    text-align: center;
+    font-size: 14px;
+}
+
+.group-table th{
+    background: #f7f9ff;
+    color: #333;
+    font-weight: 700;
+}
+
+.emptyState{
+    padding: 14px;
+    background: #f7f9ff;
+    border: 1px dashed rgba(0,0,0,0.15);
+    border-radius: 12px;
+    color: #555;
+}
+
