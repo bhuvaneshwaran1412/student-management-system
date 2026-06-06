@@ -1,6 +1,3 @@
-// Student Report (localStorage version)
-// Expects: localStorage.students = JSON.stringify([{name, age, classs, section, mark}, ...])
-
 function getStudentsFromStorage() {
   try {
     return JSON.parse(localStorage.getItem("students")) || [];
@@ -8,14 +5,11 @@ function getStudentsFromStorage() {
     return [];
   }
 }
-
 function toNumber(value) {
   const n = Number(value);
   return Number.isFinite(n) ? n : null;
 }
-
 function computeStats(list) {
-  // list is array of numeric marks
   if (!list.length) return null;
   const sum = list.reduce((a, b) => a + b, 0);
   const avg = sum / list.length;
@@ -23,22 +17,16 @@ function computeStats(list) {
   const lowest = Math.min(...list);
   return { total: list.length, avg, highest, lowest };
 }
-
 function renderGroupReport(students) {
   const container = document.getElementById("groupReport");
   if (!container) return;
-
-  // Group by (classs + section)
   const groups = new Map();
-
   for (const s of students) {
     const classs = (s && s.classs != null ? String(s.classs) : "").trim();
     const section = (s && s.section != null ? String(s.section) : "").trim();
     const key = `${classs}||${section}`;
-
     const mark = toNumber(s && s.mark);
     if (mark === null) continue;
-
     if (!groups.has(key)) {
       groups.set(key, {
         classs,
@@ -48,7 +36,6 @@ function renderGroupReport(students) {
     }
     groups.get(key).marks.push(mark);
   }
-
   const groupRows = Array.from(groups.values()).map((g) => {
     const st = computeStats(g.marks);
     if (!st) return null;
@@ -58,23 +45,18 @@ function renderGroupReport(students) {
       ...st,
     };
   }).filter(Boolean);
-
-  // sort by class then section
   groupRows.sort((a, b) => {
     const ca = String(a.classs);
     const cb = String(b.classs);
     if (ca !== cb) return ca.localeCompare(cb, undefined, { numeric: true });
     return String(a.section).localeCompare(String(b.section), undefined, { numeric: true });
   });
-
   if (!groupRows.length) {
     container.innerHTML = `<div class="emptyState">No class/section data found.</div>`;
     return;
   }
-
   const table = document.createElement("table");
   table.className = "group-table";
-
   table.innerHTML = `
     <thead>
       <tr>
@@ -103,21 +85,16 @@ function renderGroupReport(students) {
   container.innerHTML = "";
   container.appendChild(table);
 }
-
 function renderReport() {
   const students = getStudentsFromStorage();
-
   const marks = students
     .map((s) => toNumber(s && s.mark))
     .filter((n) => n !== null);
-
   const totalEl = document.getElementById("total");
   const avgEl = document.getElementById("average");
   const highEl = document.getElementById("highest");
   const lowEl = document.getElementById("lowest");
-
   const total = students.length;
-
   if (!marks.length) {
     totalEl.textContent = `Total Students: ${total}`;
     avgEl.textContent = "Average Mark: -";
@@ -130,10 +107,24 @@ function renderReport() {
     highEl.textContent = `Highest Mark: ${st.highest}`;
     lowEl.textContent = `Lowest Mark: ${st.lowest}`;
   }
+  const validStudents = students.filter((s) => {
+    const name = s?.name;
+    const age = s?.age;
+    const classs = s?.classs;
+    const section = s?.section;
+    const mark = s?.mark;
 
-  renderGroupReport(students);
+    const hasName = name != null && String(name).trim().length > 0;
+    const hasClass = classs != null && String(classs).trim().length > 0;
+    const hasSection = section != null && String(section).trim().length > 0;
+    const hasAge = age != null && Number(age) > 0;
+    const hasMark = mark != null && Number(mark) >= 0;
+
+    return hasName && hasClass && hasSection && hasAge && hasMark;
+  });
+
+  renderGroupReport(validStudents);
 }
-
 window.addEventListener("DOMContentLoaded", renderReport);
 
 

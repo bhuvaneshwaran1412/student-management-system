@@ -15,7 +15,23 @@ function renderStudents() {
     table.deleteRow(1);
   }
 
-  const students = getStudentsFromStorage();
+  // Filter out empty records that may already exist in localStorage
+  const students = getStudentsFromStorage().filter((s) => {
+    const name = s?.name;
+    const age = s?.age;
+    const classs = s?.classs;
+    const section = s?.section;
+    const mark = s?.mark;
+
+    const hasName = name != null && String(name).trim().length > 0;
+    const hasClass = classs != null && String(classs).trim().length > 0;
+    const hasSection = section != null && String(section).trim().length > 0;
+    const hasAge = age != null && Number(age) > 0;
+    const hasMark = mark != null && Number(mark) >= 0;
+
+    return hasName && hasClass && hasSection && hasAge && hasMark;
+  });
+
   for (const s of students) {
     const row = table.insertRow();
     const cell1 = row.insertCell(0);
@@ -44,9 +60,18 @@ function addStudent() {
   let mark = document.getElementById("mark").value;
 
   // Persist to localStorage
-  let students = getStudentsFromStorage();
-  students.push({ name, age, classs, section, mark });
-  localStorage.setItem("students", JSON.stringify(students));
+    let students = getStudentsFromStorage();
+
+    // Prevent saving empty/invalid student entries
+    if (!name || !String(name).trim()) return;
+    if (!age || Number(age) <= 0) return;
+    if (!classs || !String(classs).trim()) return;
+    if (!section || !String(section).trim()) return;
+    if (!mark && mark !== 0) return;
+    if (Number(mark) < 0) return;
+
+    students.push({ name, age, classs, section, mark });
+    localStorage.setItem("students", JSON.stringify(students));
 
   // Render updated UI
   renderStudents();
@@ -61,7 +86,7 @@ function addStudent() {
 
 // Basic navigation helpers
 function goToReport() {
-  window.location.href = "../report.html";
+  window.location.href = "../report/report.html";
 }
 
 function goBackToManage() {
